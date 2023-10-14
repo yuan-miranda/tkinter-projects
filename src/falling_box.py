@@ -1,29 +1,35 @@
 import tkinter
 
-SPEED = 1
-WIDTH = 25
-HEIGHT = 25
-IMAGE_PATH = "../img/box.png"
+# initial variable setup
+SPEED       = 1
+WIN_WIDTH   = 500
+WIN_HEIGHT  = 300
+IMG_WIDTH   = 10
+IMG_HEIGHT  = 10
+CURRENT_X   = 10
+CURRENT_Y   = 0
+WINDOW_BG   = "black"
+IMG_PATH    = "../img/box.png"
+WIN_TITLE   = "falling_box.py"
 
 # function to move the image
 def move_image():
-    global current_y
+    global CURRENT_Y
 
-    if current_y + image.height() != window.winfo_height():
-        image_label.place(y=current_y)
-        current_y += SPEED
+    if CURRENT_Y + IMG_HEIGHT != WIN_HEIGHT:    # make the image fall till it hits the border
+        CURRENT_Y += SPEED
 
-        window.after(10, move_image)
+    image_label.place(y=CURRENT_Y)
+    window.after(10, move_image)
 
 window = tkinter.Tk()
-window.title("falling_box.py")
-window.geometry("500x1000")
-window.config(background="black")
+window.title(WIN_TITLE)
+window.geometry(str(WIN_WIDTH) + "x" + str(WIN_HEIGHT)) # window.geometry("200x200") optionally
+window.config(background=WINDOW_BG)
 
-image = tkinter.PhotoImage(file=IMAGE_PATH, width=WIDTH, height=HEIGHT)
+image = tkinter.PhotoImage(file=IMG_PATH, width=IMG_WIDTH, height=IMG_HEIGHT)
 image_label = tkinter.Label(window, image=image)
-
-current_y = 0
+image_label.place(x=CURRENT_X, y=CURRENT_Y)
 
 move_image()
 window.mainloop()
