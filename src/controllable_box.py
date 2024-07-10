@@ -1,6 +1,5 @@
 import tkinter
 
-# initial variable setup
 SPEED       = 1
 WIN_WIDTH   = 500
 WIN_HEIGHT  = 300
@@ -14,56 +13,43 @@ WIN_TITLE   = "controllable.py"
 FONT_STYLE  = "Consolas"
 FONT_SIZE   = 8
 
-# function to move the image
 def move_image(event):
+    """Listens to the key event and move the image based on the key pressed."""
     global SPEED, CURRENT_X, CURRENT_Y
-    
-    # calculate the remaining pixel before it hits the window border.
-    # also for some reason, subtracting 4 prevent the portion of the image from
-    # going pass right and down border. I have no idea how but its there LMFAO
 
-    remaining_x_movement = window.winfo_width() - CURRENT_X - IMG_WIDTH - 4
-    remaining_y_movement = window.winfo_height() - CURRENT_Y - IMG_HEIGHT - 4
+    # calculate the remaining pixel. Its been 9 months but i still dont know why subtracting 4 works.
+    remaining_x = window.winfo_width() - CURRENT_X - IMG_WIDTH - 4
+    remaining_y = window.winfo_height() - CURRENT_Y - IMG_HEIGHT - 4
 
-    # note: min(SPEED, CURRENT_Y) and min(SPEED, remaining_y_movement)
-    # is used to adjust the pixel/speed remaining before hitting the border.
-
-    # for example: 'speed = 10' and 'rem_x_move = 5', it would go with 'rem_x_move'
-    # instead because 'speed' would make it go pass the window border.
-
-    # in the conditions below, 'CURRENT_XY > 0' ensure that the image/box would not
-    # go pass '0, 0', because 'CURRENT_XY < 0' is negative or beyond window border.
-
-    # same with 'remaining_xy_movement > 0'. Anything pass the left and down border is
-    # negative because 'remaining_xy_movement' calculates the remaining pixel before
-    # hitting. And 'remaining_xy_movement == 0' means its on the edge of the border.
-
-    if event.keysym == "w":                                     # increase the speed
+    # increase or decrease the speed.
+    if event.keysym == "w":
         SPEED += 1
-    elif event.keysym == "s":                                   # decrease the speed
+    elif event.keysym == "s":
         SPEED -= 1
 
-    if event.keysym == "Up" and CURRENT_Y > 0:                  # move up
+    # move the image based on the key pressed. Prevent the image from going out of the
+    # window border by taking the minimum value between the speed and the remaining pixel.
+    if event.keysym == "Up" and CURRENT_Y > 0:
         CURRENT_Y -= min(SPEED, CURRENT_Y)
-    elif event.keysym == "Down" and remaining_y_movement > 0:   # move down
-        CURRENT_Y += min(SPEED, remaining_y_movement)
-    elif event.keysym == "Left" and CURRENT_X > 0:              # move left
+    elif event.keysym == "Down" and remaining_y > 0:
+        CURRENT_Y += min(SPEED, remaining_y)
+    elif event.keysym == "Left" and CURRENT_X > 0:
         CURRENT_X -= min(SPEED, CURRENT_X)
-    elif event.keysym == "Right" and remaining_x_movement > 0:  # move right
-        CURRENT_X += min(SPEED, remaining_x_movement)
+    elif event.keysym == "Right" and remaining_x > 0:
+        CURRENT_X += min(SPEED, remaining_x)
         
     image_label.place(x=CURRENT_X, y=CURRENT_Y)
-    window.after(10, print_coordinate)
+    window.after(10, display_coordinates)
 
-# function that render the current XY and speed on the screen
-def print_coordinate():
+def display_coordinates():
+    """Displays the current x, y, and speed on the window top left corner."""
     x_coordinate_text.config(text="[LEFT RIGHT] x: " + str(CURRENT_X))
     y_coordinate_text.config(text="[UP DOWN] y: " + str(CURRENT_Y))
     speed_text.config(text="[W S] speed: " + str(SPEED))
 
 window = tkinter.Tk()
 window.title(WIN_TITLE)
-window.geometry(str(WIN_WIDTH) + "x" + str(WIN_HEIGHT))
+window.geometry(f"{WIN_WIDTH}x{WIN_HEIGHT}")
 window.config(background=WINDOW_BG)
 
 image = tkinter.PhotoImage(file=IMG_PATH, width=IMG_WIDTH, height=IMG_HEIGHT)

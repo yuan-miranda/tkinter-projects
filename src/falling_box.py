@@ -24,7 +24,7 @@ def move_image():
 
 window = tkinter.Tk()
 window.title(WIN_TITLE)
-window.geometry(str(WIN_WIDTH) + "x" + str(WIN_HEIGHT)) # window.geometry("200x200") optionally
+window.geometry(f"{WIN_WIDTH}x{WIN_HEIGHT}")
 window.config(background=WINDOW_BG)
 
 image = tkinter.PhotoImage(file=IMG_PATH, width=IMG_WIDTH, height=IMG_HEIGHT)
