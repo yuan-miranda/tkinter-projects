@@ -1,11 +1,13 @@
 import tkinter
 
-# function to print the content of the entry box
+WIN_TITLE = "get_input.py"
+
 def print_entry():
+    """Prints the text in the entry."""
     print(entry.get())
 
 window = tkinter.Tk()
-window.title("get_input.py")
+window.title(WIN_TITLE)
 
 entry = tkinter.Entry(window)
 entry.pack(side="left")

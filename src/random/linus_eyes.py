@@ -3,7 +3,7 @@ import tkinter as tk
 WIN_WIDTH   = 660
 WIN_HEIGHT  = 250
 IMG_PATH   = "../../img/linus_eyes.png"
-WIN_TITLE   = "linus eyes lol"
+WIN_TITLE   = "linus_eyes.py"
 
 window  = tk.Tk()
 window.title(WIN_TITLE)

@@ -5,20 +5,23 @@ WIN_WIDTH = 300
 WIN_HEIGHT = 100
 IMG_PATH = "../../img/piston.png"
 IMG_PUSHED_PATH = "../../img/piston_pushed.png"
-WIN_TITLE = "piston sheep"
+WIN_TITLE = "piston_sheep.py"
 
-def show_piston():
+def display_piston():
+    """Displays the piston image."""
     piston_img.place(x=0, y=0)
     piston_pushed_img.place_forget()
 
 def key_press(event):
+    """Listens to the key event and push the piston when space is pressed."""
     if event.keysym == "space":
         push_piston()
 
 def push_piston():
+    """Replace the piston image with the pushed piston image."""
     piston_img.place_forget()
     piston_pushed_img.place(x=0, y=0)
-    window.after(100, show_piston)
+    window.after(100, display_piston)
 
 window  = tk.Tk()
 window.title(WIN_TITLE)

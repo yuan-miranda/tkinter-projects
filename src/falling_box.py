@@ -14,9 +14,10 @@ WIN_TITLE   = "falling_box.py"
 
 # function to move the image
 def move_image():
+    """Moves the image down till it reaches the window height."""
     global CURRENT_Y
 
-    if CURRENT_Y + IMG_HEIGHT != WIN_HEIGHT:    # make the image fall till it hits the border
+    if CURRENT_Y + IMG_HEIGHT != WIN_HEIGHT:
         CURRENT_Y += SPEED
 
     image_label.place(y=CURRENT_Y)
